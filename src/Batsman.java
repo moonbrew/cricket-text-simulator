@@ -30,11 +30,11 @@ public class Batsman {
 	 */
 	public String playBall(){
 		double r = Math.random();
-		playBall2(r);//body separated for testing
+		playBall(r);//body separated for testing
 		return currentBallResult;		
 	}
 		
-	private void playBall2(double r){	
+	private void playBall(double r){	
 		System.out.println(r);//
 		int count = 0;
 		double sum = 0;
@@ -48,7 +48,11 @@ public class Batsman {
 		addRuns();
 		ballsPlayed++;
 	}
-
+	//remove
+	public void testPlayBall(double r){
+	    playBall(r);
+    }
+	
 	//Helper method showing short way of getting runs that can have a different implementation
 	private void addRuns() {
 		if(!currentBallResult.equals("dot ball") && !currentBallResult.equals("out"))
