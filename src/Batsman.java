@@ -38,7 +38,7 @@ public class Batsman {
 	}
 		
 	private void playBall(double r){	
-		System.out.println(r);//
+		//System.out.println(r);//
 		int count = 0;
 		double sum = 0;
 		while(count < BALL_RESULT.length){
