@@ -22,6 +22,9 @@ public class Batsman {
 	public Batsman(String n, int[] p){
 		name = n;
 		probabilities = p;
+		//check same length as results(8)
+		//check no negative?
+		//check total 100
 	}
 
 	/**
