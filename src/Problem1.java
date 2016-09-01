@@ -14,30 +14,27 @@ public class Problem1 {
 		n.addBatsman("R Rumrah", new int[]{20, 30, 15, 5, 5, 1, 4, 20});
 		n.addBatsman("Shashi Henra", new int[]{30, 25, 5, 0, 5, 1, 4, 30});
 		
-		try{
-			n.play();
-		}
+                n.play();
+		
 		catch(IllegalStateException e){
 			System.out.println(e.getMessage());
 		}
 
 				
 		//overall result
-		if(n.getResult() == Innings.Result.RUNSCHASED){
-			int wkr = n.getTotalBatsmen() - n.getWicketsLeft() - 1;
-			int br = oversRemaining * 6 - n.getBalls();
+                        if(n.getResult() == Innings.Result.RUNSCHASED){
+			int br = oversRemaining * 6 - n.getBallsLeft();
 			System.out.printf("%s won by %d %s and %d %s remaining.\n", n.getTeamName(),
-					wkr, wkr == 1 ? "wicket" : "wickets", br, br == 1 ? "ball" : "balls");
+					n.getWicketsLeft(), n.getWicketsLeft() == 1 ? "wicket" : "wickets", n.getBallsLeft(), n.getBallsLeft() == 1 ? "ball" : "balls");
 		}else if(n.getResult() == Innings.Result.BALLSOVER){
-			int wkr = n.getTotalBatsmen() - n.getWickets() - 1;
-			int rr = runsRemaining - n.getRuns();
+			int rr = runsRemaining - n.getRunsLeft();
 			System.out.printf("%s lost with %d %s and %d %s remaining.\n", n.getTeamName(),
-					wkr, wkr == 1 ? "wicket" : "wickets", rr, rr == 1 ? "run" : "runs");
+					n.getWicketsLeft(), n.getWicketsLeft() == 1 ? "wicket" : "wickets", n.getRunsLeft(), n.getRunsLeft() == 1 ? "run" : "runs");
 		}else if(n.getResult() == Innings.Result.ALLOUT){
 			int br = oversRemaining * 6 - n.getBalls();
 			int rr = runsRemaining - n.getRuns();
 			System.out.printf("%s lost with %d %s and %d %s remaining.\n", n.getTeamName(),
-					br, br == 1 ? "ball" : "balls", rr, rr == 1 ? "run" : "runs");
+					n.getBallsLeft(), n.getBallsLeft() == 1 ? "ball" : "balls", n.getRunsLeft(), n.getRunsLeft() == 1 ? "run" : "runs");
 		}
 
 		System.out.println();
