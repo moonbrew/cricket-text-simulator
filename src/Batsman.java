@@ -5,8 +5,8 @@
 
 public class Batsman {
 
-    private String               name;
-    private int[]                probabilities;
+    private final String         name;
+    private final int[]          probabilities;
     private int                  runsScored;
     private int                  ballsPlayed;
 

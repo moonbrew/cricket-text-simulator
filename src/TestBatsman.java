@@ -52,4 +52,27 @@ public class TestBatsman {
         a.testPlayBall(0.99);
         assertThat(a.getCurrentBallResult(), is((Batsman.BALL_RESULT[7])));
     }
+
+    @Test
+    public void testBatsman() {//initial values
+        Batsman a = new Batsman("Testguy", new int[]{10, 10, 10, 10, 10, 10, 10, 30});
+        assertThat(a.getBallsPlayed(), is(0));
+        assertThat(a.getRunsScored(), is(0));
+        a.testPlayBall(0.09);
+        assertThat(a.getRunsScored(), is(0));
+        assertThat(a.getBallsPlayed(), is(1));
+        a.testPlayBall(0.19);
+        assertThat(a.getRunsScored(), is(1));
+        assertThat(a.getBallsPlayed(), is(2));
+        a.testPlayBall(0.39);
+        assertThat(a.getRunsScored(), is(4));
+        assertThat(a.getBallsPlayed(), is(3));
+        a.testPlayBall(0.69);
+        assertThat(a.getRunsScored(), is(10));
+        assertThat(a.getBallsPlayed(), is(4));
+        a.testPlayBall(0.7);
+        assertThat(a.getRunsScored(), is(10));
+        assertThat(a.getBallsPlayed(), is(5));
+    }
+
 }
