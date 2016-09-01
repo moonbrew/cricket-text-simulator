@@ -11,7 +11,7 @@ public class TestBatsman {
         Batsman a = new Batsman("Testguy", new int[]{0, 0, 0, 0, 0, 0, 0, 100});
         for (int x : values) {
             a.testPlayBall((double)x / 100);
-            assertThat(a.getCurrentBallResult(), is((Batsman.BALL_RESULT[7])));
+            assertThat(a.getCurrentBallResult(), is(Batsman.BALL_RESULT[7]));
         }
     }
 
@@ -20,15 +20,15 @@ public class TestBatsman {
         Batsman a = new Batsman("Testguy", new int[]{0, 0, 0, 50, 0, 0, 50, 0});
 
         a.testPlayBall(0);
-        assertThat(a.getCurrentBallResult(), is((Batsman.BALL_RESULT[3])));
+        assertThat(a.getCurrentBallResult(), is(Batsman.BALL_RESULT[3]));
         a.testPlayBall(0.49);
-        assertThat(a.getCurrentBallResult(), is((Batsman.BALL_RESULT[3])));
+        assertThat(a.getCurrentBallResult(), is(Batsman.BALL_RESULT[3]));
         a.testPlayBall(0.5);
-        assertThat(a.getCurrentBallResult(), is((Batsman.BALL_RESULT[6])));
+        assertThat(a.getCurrentBallResult(), is(Batsman.BALL_RESULT[6]));
         a.testPlayBall(0.75);
-        assertThat(a.getCurrentBallResult(), is((Batsman.BALL_RESULT[6])));
+        assertThat(a.getCurrentBallResult(), is(Batsman.BALL_RESULT[6]));
         a.testPlayBall(0.9999999);
-        assertThat(a.getCurrentBallResult(), is((Batsman.BALL_RESULT[6])));
+        assertThat(a.getCurrentBallResult(), is(Batsman.BALL_RESULT[6]));
     }
 
     @Test
@@ -36,21 +36,21 @@ public class TestBatsman {
         Batsman a = new Batsman("Testguy", new int[]{10, 10, 20, 10, 10, 20, 10, 10});
 
         a.testPlayBall(0.09);
-        assertThat(a.getCurrentBallResult(), is((Batsman.BALL_RESULT[0])));
+        assertThat(a.getCurrentBallResult(), is(Batsman.BALL_RESULT[0]));
         a.testPlayBall(0.19);
-        assertThat(a.getCurrentBallResult(), is((Batsman.BALL_RESULT[1])));
+        assertThat(a.getCurrentBallResult(), is(Batsman.BALL_RESULT[1]));
         a.testPlayBall(0.39);
-        assertThat(a.getCurrentBallResult(), is((Batsman.BALL_RESULT[2])));
+        assertThat(a.getCurrentBallResult(), is(Batsman.BALL_RESULT[2]));
         a.testPlayBall(0.49);
-        assertThat(a.getCurrentBallResult(), is((Batsman.BALL_RESULT[3])));
+        assertThat(a.getCurrentBallResult(), is(Batsman.BALL_RESULT[3]));
         a.testPlayBall(0.59);
-        assertThat(a.getCurrentBallResult(), is((Batsman.BALL_RESULT[4])));
+        assertThat(a.getCurrentBallResult(), is(Batsman.BALL_RESULT[4]));
         a.testPlayBall(0.79);
-        assertThat(a.getCurrentBallResult(), is((Batsman.BALL_RESULT[5])));
+        assertThat(a.getCurrentBallResult(), is(Batsman.BALL_RESULT[5]));
         a.testPlayBall(0.89);
-        assertThat(a.getCurrentBallResult(), is((Batsman.BALL_RESULT[6])));
+        assertThat(a.getCurrentBallResult(), is(Batsman.BALL_RESULT[6]));
         a.testPlayBall(0.99);
-        assertThat(a.getCurrentBallResult(), is((Batsman.BALL_RESULT[7])));
+        assertThat(a.getCurrentBallResult(), is(Batsman.BALL_RESULT[7]));
     }
 
     @Test
