@@ -1,4 +1,6 @@
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
@@ -75,4 +77,34 @@ public class TestBatsman {
         assertThat(a.getBallsPlayed(), is(5));
     }
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void testBatsmanConstructor1() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage(is("Probability array cannot be empty!"));
+        Batsman a = new Batsman("Testguy", new int[5]);
+    }
+
+    @Test
+    public void testBatsmanConstructor2() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage(is("Probability array should be of length " + Batsman.BALL_RESULT.length));
+        Batsman a = new Batsman("Testguy", new int[]{10, 10, 10, 10, 60});
+    }
+
+    @Test
+    public void testBatsmanConstructor3() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage(is("Probabilities should add up to 100"));
+        Batsman a = new Batsman("Testguy", new int[]{10, 10, 10, 10, 10, 10, 10, 10});
+    }
+
+    @Test
+    public void testBatsmanConstructor4() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage(is("Probabilities should not be negative!"));
+        Batsman a = new Batsman("Testguy", new int[]{10, 20, 30, 30, 10, -10, 20, -10});
+    }
 }
