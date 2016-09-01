@@ -24,7 +24,7 @@ public class Problem1 {
 				
 		//overall result
 		if(n.getResult() == Innings.Result.RUNSCHASED){
-			int wkr = n.getTotalBatsmen() - n.getWickets() - 1;
+			int wkr = n.getTotalBatsmen() - n.getWicketsLeft() - 1;
 			int br = oversRemaining * 6 - n.getBalls();
 			System.out.printf("%s won by %d %s and %d %s remaining.\n", n.getTeamName(),
 					wkr, wkr == 1 ? "wicket" : "wickets", br, br == 1 ? "ball" : "balls");

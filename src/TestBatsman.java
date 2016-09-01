@@ -34,7 +34,7 @@ public class TestBatsman {
     }
 
     @Test
-    public void testPlayBall3() {///all results
+    public void testPlayBall3() {//all ball results
         Batsman a = new Batsman("Testguy", new int[]{10, 10, 20, 10, 10, 20, 10, 10});
 
         a.testPlayBall(0.09);
@@ -56,7 +56,7 @@ public class TestBatsman {
     }
 
     @Test
-    public void testBatsman() {//initial values
+    public void testBatsman() {//initial values, crude state check
         Batsman a = new Batsman("Testguy", new int[]{10, 10, 10, 10, 10, 10, 10, 30});
         assertThat(a.getBallsPlayed(), is(0));
         assertThat(a.getRunsScored(), is(0));
@@ -77,6 +77,7 @@ public class TestBatsman {
         assertThat(a.getBallsPlayed(), is(5));
     }
 
+    //through exception checking
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
