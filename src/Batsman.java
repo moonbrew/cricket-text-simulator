@@ -1,4 +1,5 @@
 /**
+ * Class representing a single batsman.
  * Knows name, probabilities, runs scored and balls played.
  * Plays a ball based on probability.
  */
@@ -16,9 +17,10 @@ public class Batsman {
     /**
      * Construct a batsman given a name and probabilities.
      * @param n Name of batsman
-     * @param p Probabilities in an integer array in the same order as Batsman.BALL_RESULT.
+     * @param p Probabilities as percentages for each result in Batsman.BALL_RESULT in the same order in an integer array.
+     * @throws IllegalArgumentException When the probability array is invalid. Does not check if order is right.
      */
-    public Batsman(String n, int[] p) {
+    public Batsman(String n, int[] p) throws IllegalArgumentException {
         name = n;
 
         if (p == null)
@@ -40,8 +42,8 @@ public class Batsman {
     }
 
     /**
-     * Play a ball based on given probability. Updates balls played and runs scored.
-     * @return ball result.
+     * Play a ball. Result is influenced by batsman's probabilities. Updates balls played and runs scored.
+     * @return Result.
      */
     public String playBall() {
         double r = Math.random();
