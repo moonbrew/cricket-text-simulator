@@ -48,14 +48,13 @@ public class Innings {
      * @throws IllegalStateException Innings is not in correct state to be played
      */
     public int play() throws IllegalStateException {
-        if (lineUp.size() < 2) {
+        if (lineUp.size() < 2)
             throw new IllegalStateException("Please add more Batsmen");
-        }
 
         Iterator<Batsman> l = lineUp.iterator();
 
         Batsman striker = l.next(), nonStriker = l.next();
-        
+
         commentary = "";
         //e.g. 3 overs left.
         commentary += String.format("%d %s left.", oversLeft, oversLeft == 1 ? "over" : "overs");
@@ -151,28 +150,28 @@ public class Innings {
     }
 
     public int getRunsLeft() {
-        return runs;
+        if (battingOrder == BattingOrder.SECOND)
+            return runsToWin - runs;
+
+        return 0;
     }
 
     public int getBallsLeft() {
-        return balls;
+        return oversLeft * 6 - balls;
     }
 
     public int getWicketsLeft() {
-        return lineUp.size () - wickets - 1;
+        return lineUp.size() - wickets - 1;
     }
 
     /**
      * Adds a batsman. They will bat in the order they are added with this method
      * @param name Name of batsman
      * @param prob Probabilities in an integer array in the same order as Batsman.BALL_RESULT.
+     * @throws IllegalArgumentException When probability array is not valid.
      */
-    public void addBatsman(String name, int[] prob) {
+    public void addBatsman(String name, int[] prob) throws IllegalArgumentException {
         lineUp.add(new Batsman(name, prob));
-    }
-
-    public int getTotalBatsmen() {
-        return lineUp.size();
     }
 
     public Iterator<Batsman> getBatsmanIterator() {
