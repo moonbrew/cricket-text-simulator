@@ -20,10 +20,23 @@ public class Batsman {
      */
     public Batsman(String n, int[] p) {
         name = n;
+
+        if (p == null)
+            throw new IllegalArgumentException("Probability array cannot be null!");
+        else if (p.length != BALL_RESULT.length)
+            throw new IllegalArgumentException("Probability array should be of length " + BALL_RESULT.length);
+
+        int sum = 0;
+        for (int x : p) {
+            if (x < 0)
+                throw new IllegalArgumentException("Probabilities should not be negative!");
+            sum += x;
+        }
+
+        if (sum != 100)
+            throw new IllegalArgumentException("Probabilities should add up to 100");
+
         probabilities = p;
-        //check same length as results(8)
-        //check no negative?
-        //check total 100
     }
 
     /**

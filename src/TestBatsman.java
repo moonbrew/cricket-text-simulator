@@ -81,28 +81,35 @@ public class TestBatsman {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void testBatsmanConstructor1() {
+    public void testBatsmanConstructor1() {//no null
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage(is("Probability array cannot be empty!"));
-        Batsman a = new Batsman("Testguy", new int[5]);
+        thrown.expectMessage(is("Probability array cannot be null!"));
+        Batsman a = new Batsman("Testguy", null);
     }
 
     @Test
-    public void testBatsmanConstructor2() {
+    public void testBatsmanConstructor2() { //check same length as results(8)
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage(is("Probability array should be of length " + Batsman.BALL_RESULT.length));
         Batsman a = new Batsman("Testguy", new int[]{10, 10, 10, 10, 60});
     }
 
     @Test
-    public void testBatsmanConstructor3() {
+    public void testBatsmanConstructor3() {// total 100
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage(is("Probabilities should add up to 100"));
+        Batsman a = new Batsman("Testguy", new int[8]);
+    }
+
+    @Test
+    public void testBatsmanConstructor4() {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage(is("Probabilities should add up to 100"));
         Batsman a = new Batsman("Testguy", new int[]{10, 10, 10, 10, 10, 10, 10, 10});
     }
 
     @Test
-    public void testBatsmanConstructor4() {
+    public void testBatsmanConstructor5() {// no negatives 
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage(is("Probabilities should not be negative!"));
         Batsman a = new Batsman("Testguy", new int[]{10, 20, 30, 30, 10, -10, 20, -10});
