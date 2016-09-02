@@ -77,7 +77,7 @@ public class TestBatsman {
         assertThat(a.getBallsPlayed(), is(5));
     }
 
-    //through exception checking
+    //thorough exception checking
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
