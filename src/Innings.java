@@ -1,24 +1,21 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Class representing a single Innings. 
+ */
 public class Innings {
 
     private final String       teamName;
-
-    private final BattingOrder battingOrder;
-    private final int          oversLeft;
-    private final int          runsToWin;      //so final means have to have initialized in constructor? 
-    private ArrayList<Batsman> lineUp;         //why not later adding for probabs?
+    private final boolean      isBattingSecond;
+    private final int          totalOvers;
+    private final int          runsToWin;      //so final means you have to initialize in constructor? 
+    private ArrayList<Batsman> lineUp;
     private Result             result;
     private String             commentary = "";
     private int                runs;
     private int                balls;
     private int                wickets;
-
-    public enum BattingOrder {
-        FIRST,
-        SECOND
-    }
 
     public enum Result {
         ALLOUT,
@@ -27,19 +24,33 @@ public class Innings {
     }
 
     /**
-     * Constructs a new innings
+     * Constructs a new first innings.
      * @param t Team name
-     * @param b Whether the team is batting first or second indicated by BattingOrder.FIRST or BattingOrder.Second
-     * @param o Total overs left
+     * @param o Total overs
      * @param rtw Runs to win if team is batting second
      */
-    public Innings(String t, BattingOrder b, int o, int rtw) {
+    public Innings(String t, int o) {
         teamName = t;
-        lineUp = new ArrayList<Batsman>();//chech?
-        battingOrder = b;
-        oversLeft = o;
-        // if (battingOrder == BattingOrder.SECOND)
+        totalOvers = o;
+
+        runsToWin = 0;
+        lineUp = new ArrayList<Batsman>();
+        isBattingSecond = false;
+    }
+
+    /**
+     * Constructs a new second innings
+     * @param t Team name
+     * @param o Total overs left
+     * @param rtw Runs to win
+     */
+    public Innings(String t, int o, int rtw) {
+        teamName = t;
+        totalOvers = o;
         runsToWin = rtw;
+
+        lineUp = new ArrayList<Batsman>();//chech?
+        isBattingSecond = true;
     }
 
     /**
@@ -57,17 +68,17 @@ public class Innings {
 
         commentary = "";
         //e.g. 3 overs left.
-        commentary += String.format("%d %s left.", oversLeft, oversLeft == 1 ? "over" : "overs");
+        commentary += String.format("%d %s left.", totalOvers, totalOvers == 1 ? "over" : "overs");
         //e.g. 28 runs to win
-        if (battingOrder == BattingOrder.SECOND)
+        if (isBattingSecond)
             commentary += String.format(" %d %s to win.", runsToWin, runsToWin == 1 ? "run" : "runs");
         commentary += "\n\n";
 
         balls = 1;
         runs = 0;
         wickets = 0;
-        while (balls <= oversLeft * 6) {
-            String currentOver = (balls - 1) / 6 + "." + (balls % 6);
+        while (balls <= totalOvers * 6) {
+            String currentOver = (balls - 1) / 6 + "." + ((balls - 1) % 6 + 1);
             String ballResult = striker.playBall();
 
             if (ballResult.equals("out")) {
@@ -96,14 +107,14 @@ public class Innings {
             }
 
             //chase check
-            if (battingOrder == BattingOrder.SECOND && runs >= runsToWin) {
+            if (isBattingSecond && runs >= runsToWin) {
                 result = Result.RUNSCHASED;
                 commentary += String.format(" %s wins!\n", teamName);
                 break;
             }
 
             //if over
-            if (balls % 6 == 0 && balls / 6 != oversLeft) {//not last ball of innings
+            if (balls % 6 == 0 && balls / 6 != totalOvers) {//not last ball of innings
                 //switch
                 Batsman z = striker;
                 striker = nonStriker;
@@ -112,10 +123,10 @@ public class Innings {
                 commentary += "\n\n";
 
                 //e.g. 3 overs left.
-                int ol = oversLeft - (balls) / 6;
+                int ol = totalOvers - (balls) / 6;
                 commentary += String.format("%d %s left.", ol, ol == 1 ? "over" : "overs");
                 //e.g. 28 runs to win
-                if (battingOrder == BattingOrder.SECOND) {
+                if (isBattingSecond) {
                     int rl = runsToWin - runs;
                     commentary += String.format(" %d %s to win.", rl, rl == 1 ? "run" : "runs");
                 }
@@ -125,7 +136,7 @@ public class Innings {
             balls++;
         }
 
-        if (balls > oversLeft * 6) {
+        if (balls > totalOvers * 6) {
             result = Result.BALLSOVER;//for reruns. better no default
             balls--;
         }
@@ -150,14 +161,11 @@ public class Innings {
     }
 
     public int getRunsLeft() {
-        if (battingOrder == BattingOrder.SECOND)
-            return runsToWin - runs;
-
-        return 0;
+        return runsToWin;
     }
 
     public int getBallsLeft() {
-        return oversLeft * 6 - balls;
+        return totalOvers * 6 - balls;
     }
 
     public int getWicketsLeft() {

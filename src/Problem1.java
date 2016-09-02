@@ -7,7 +7,7 @@ public class Problem1 {
         int oversRemaining = 4;
         int runsRemaining = 40;
 
-        Innings n = new Innings("Lengaburu", Innings.BattingOrder.SECOND, oversRemaining, runsRemaining);
+        Innings n = new Innings("Lengaburu", oversRemaining, runsRemaining);
 
         n.addBatsman("Kirat Boli", new int[]{5, 30, 25, 10, 15, 1, 9, 5});
         n.addBatsman("N.S Nodhi", new int[]{10, 40, 20, 5, 10, 1, 4, 10});
