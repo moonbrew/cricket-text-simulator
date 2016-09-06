@@ -9,6 +9,7 @@ public class TestInnings {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    //state after creation
     @Test
     public void testInitialStateRunsLeft1() {
         Innings a = new Innings("Testteam", 6);
@@ -28,7 +29,7 @@ public class TestInnings {
     }
 
     @Test
-    public void testInitialStateResult() {
+    public void testInitialStateResult1() {
         Innings a = new Innings("Testteam", 6);
 
         //is null! play innings exception unsupported operation exception.
@@ -43,7 +44,7 @@ public class TestInnings {
     public void testInitialStateWickets() {
         Innings a = new Innings("Testteam", 6);
 
-        //add batsman. Atleast 2?
+        //add batsman. Atleast 1.
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("Please add batsman first.");
         a.getWicketsLeft();
@@ -54,4 +55,6 @@ public class TestInnings {
         Innings a = new Innings("Testteam", 6);
         assertThat("Balls", a.getBallsLeft(), is(36));
     }
+    
+    //subsequent state checks
 }

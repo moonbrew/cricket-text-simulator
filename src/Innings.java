@@ -25,7 +25,7 @@ public class Innings {
     }
 
     /**
-     * Constructs a new first innings.
+     * Constructs a new innings for a team that bats first.
      * @param t Team name
      * @param o Totalovers
      */
@@ -39,7 +39,7 @@ public class Innings {
     }
 
     /**
-     * Constructs a new second innings
+     * Constructs a innings for a team that bats second.
      * @param t Team name
      * @param o Total overs left
      * @param rtw Runs to win
@@ -49,14 +49,14 @@ public class Innings {
         totalOvers = o;
         runsToWin = rtw;
 
-        lineUp = new ArrayList<Batsman>();//chech?
+        lineUp = new ArrayList<Batsman>();
         isBattingSecond = true;
     }
 
     /**
-     * Play the innings
-     * @return Runs scored
-     * @throws IllegalStateException Innings is not in correct state to be played
+     * Play the innings.
+     * @return Runs scored.
+     * @throws IllegalStateException Innings is not in correct state to be played.
      */
     public int play() throws IllegalStateException {
         if (lineUp.size() < 2)
@@ -144,13 +144,20 @@ public class Innings {
         return runs;
     }
 
+    /*
+     * Getters
+     */
+
+    /**
+     * Provides team name.
+     */
     public String getTeamName() {
         return teamName;
     }
 
     /**
      * Provides the innings result.
-     * @throws IllegalStateException if innings is not complete
+     * @throws IllegalStateException if innings is not complete.
      */
     public Result getResult() throws IllegalStateException {
         if (result == null)
@@ -159,15 +166,15 @@ public class Innings {
     }
 
     /**
-     * Provide a preformatted commentary of the innings
-     * @return commentary
+     * Provide a preformatted commentary of the innings.
+     * @return commentary.
      */
     public String getCommentary() {
         return commentary;
     }
 
     /**
-     * Results runs left.
+     * Provides runs left.
      * @throws UnsupportedOperationException if its first innings.
      */
     public int getRunsLeft() throws UnsupportedOperationException {
@@ -177,12 +184,15 @@ public class Innings {
             throw new UnsupportedOperationException("Cannot ask for runs left in first innings.");
     }
 
+    /**
+     * Provides the number of balls left.
+     */
     public int getBallsLeft() {
         return totalOvers * 6 - balls;
     }
 
     /**
-     * Provides wickets left
+     * Provides wickets left.
      * @throws IllegalStateException if atleast 1 batsman is not added.
      */
     public int getWicketsLeft() throws IllegalStateException {
@@ -192,16 +202,22 @@ public class Innings {
     }
 
     /**
-     * Adds a batsman. They will bat in the order they are added with this method
+     * Provides an Iterator for the innings lineup.
+     */
+    public Iterator<Batsman> getBatsmanIterator() {
+        return lineUp.iterator();
+    }
+
+    /*
+     * Setters
+     */
+    /**
+     * Adds a batsman. They will bat in the order they are added with this method.
      * @param name Name of batsman
      * @param prob Probabilities in an integer array in the same order as Batsman.BALL_RESULT.
      * @throws IllegalArgumentException When probability array is not valid.
      */
     public void addBatsman(String name, int[] prob) throws IllegalArgumentException {
         lineUp.add(new Batsman(name, prob));
-    }
-
-    public Iterator<Batsman> getBatsmanIterator() {
-        return lineUp.iterator();
     }
 }
