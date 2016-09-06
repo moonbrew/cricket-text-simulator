@@ -8,11 +8,11 @@ import static org.hamcrest.CoreMatchers.is;
 public class TestInnings {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-    
-/*
- * state after creation
- */
-    
+
+    /*
+     * state after creation
+     */
+
     @Test
     public void testInitialStateRunsLeft1() {
         Innings a = new Innings("Testteam", 6);
@@ -58,11 +58,50 @@ public class TestInnings {
         Innings a = new Innings("Testteam", 6);
         assertThat("Balls", a.getBallsLeft(), is(36));
     }
-    
-/*
- * add batsman state checks
- */
 
+    /*
+     * add batsman state checks
+     */
 
+    @Test
+    public void testAddBatsmanStateWickets1() {
+        Innings a = new Innings("Testteam", 6);
+        a.addBatsman("Testguy1", new int[]{5, 30, 25, 10, 15, 1, 9, 5});
+        assertThat("Add batsman wickets1", a.getWicketsLeft(), is(0));
+    }
 
+    @Test
+    public void testAddBatsmanStateWickets2() {
+        Innings a = new Innings("Testteam", 6);
+        a.addBatsman("Testguy1", new int[]{5, 30, 25, 10, 15, 1, 9, 5});
+        a.addBatsman("Testguy2", new int[]{10, 40, 20, 5, 10, 1, 4, 10});
+        a.addBatsman("Testguy3", new int[]{20, 30, 15, 5, 5, 1, 4, 20});
+        a.addBatsman("Testguy4", new int[]{30, 25, 5, 0, 5, 1, 4, 30});
+        assertThat("Add batsman state wickets2", a.getWicketsLeft(), is(3));
+    }
+
+    /*
+     * play initial state checks
+     */
+
+    @Test
+    public void testPlayInitialStateWickets1() {
+        Innings a = new Innings("Testteam", 6);
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("Please add more Batsmen");
+        a.play();
+    }
+
+    @Test
+    public void testPlayInitialStateWickets2() {
+        Innings a = new Innings("Testteam", 6);
+        a.addBatsman("Testguy1", new int[]{5, 30, 25, 10, 15, 1, 9, 5});
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("Please add more Batsmen");
+        a.play();
+    }
+
+    /*
+     * After play state tests
+     */
 }
