@@ -6,10 +6,10 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
 public class TestBatsman {
-    
-/*
- * Weighted random generator tests
- */
+
+    /*
+     * Weighted random generator and state tests
+     */
 
     @Test
     public void testPlayBall1() {//checking 100%
@@ -19,6 +19,8 @@ public class TestBatsman {
             a.testPlayBall((double)x / 100);
             assertThat(a.getCurrentBallResult(), is(Batsman.BALL_RESULT[7]));
         }
+        assertThat(a.getRunsScored(), is(0));
+        assertThat(a.getBallsPlayed(), is(20));
     }
 
     @Test
@@ -35,6 +37,10 @@ public class TestBatsman {
         assertThat(a.getCurrentBallResult(), is(Batsman.BALL_RESULT[6]));
         a.testPlayBall(0.9999999);
         assertThat(a.getCurrentBallResult(), is(Batsman.BALL_RESULT[6]));
+
+        assertThat(a.getRunsScored(), is(24));
+        assertThat(a.getBallsPlayed(), is(5));
+
     }
 
     @Test
@@ -57,6 +63,8 @@ public class TestBatsman {
         assertThat(a.getCurrentBallResult(), is(Batsman.BALL_RESULT[6]));
         a.testPlayBall(0.99);
         assertThat(a.getCurrentBallResult(), is(Batsman.BALL_RESULT[7]));
+        assertThat(a.getRunsScored(), is(21));
+        assertThat(a.getBallsPlayed(), is(8));
     }
 
     @Test
@@ -81,9 +89,9 @@ public class TestBatsman {
         assertThat(a.getBallsPlayed(), is(5));
     }
 
-/*
- * Initialization tests
- */
+    /*
+     * Initialization tests
+     */
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
