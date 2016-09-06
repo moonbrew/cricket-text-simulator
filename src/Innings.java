@@ -214,7 +214,7 @@ public class Innings {
     /**
      * Adds a batsman. They will bat in the order they are added with this method.
      * @param name Name of batsman
-     * @param prob Probabilities in an integer array in the same order as Batsman.BALL_RESULT.
+     * @param prob Probabilities in an integer array in the same order as Batsman.BALL_RESULT. Order is not checked.
      * @throws IllegalArgumentException When probability array is not valid.
      */
     public void addBatsman(String name, int[] prob) throws IllegalArgumentException {

@@ -17,7 +17,7 @@ public class Batsman {
     /**
      * Construct a batsman given a name and probabilities.
      * @param n Name of batsman
-     * @param p Probabilities as percentages for each result in Batsman.BALL_RESULT in the same order in an integer array.
+     * @param p Probabilities as percentages for each result in Batsman.BALL_RESULT in the same order in an integer array. Order is not checked.
      * @throws IllegalArgumentException When the probability array is invalid. Does not check if order is right.
      */
     public Batsman(String n, int[] p) throws IllegalArgumentException {
