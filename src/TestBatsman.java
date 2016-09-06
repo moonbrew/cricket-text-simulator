@@ -6,6 +6,10 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
 public class TestBatsman {
+    
+/*
+ * Weighted random generator tests
+ */
 
     @Test
     public void testPlayBall1() {//checking 100%
@@ -77,7 +81,9 @@ public class TestBatsman {
         assertThat(a.getBallsPlayed(), is(5));
     }
 
-    //thorough exception checking
+/*
+ * Initialization tests
+ */
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 

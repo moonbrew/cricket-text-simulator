@@ -8,8 +8,11 @@ import static org.hamcrest.CoreMatchers.is;
 public class TestInnings {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
-    //state after creation
+    
+/*
+ * state after creation
+ */
+    
     @Test
     public void testInitialStateRunsLeft1() {
         Innings a = new Innings("Testteam", 6);
@@ -56,5 +59,10 @@ public class TestInnings {
         assertThat("Balls", a.getBallsLeft(), is(36));
     }
     
-    //subsequent state checks
+/*
+ * add batsman state checks
+ */
+
+
+
 }
