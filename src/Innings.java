@@ -9,7 +9,8 @@ public class Innings {
     private final String       teamName;
     private final boolean      isBattingSecond;
     private final int          totalOvers;
-    private final int          runsToWin;      //so final means you have to initialize in constructor? 
+    private final int          runsToWin;      //new: so final means you have to initialize in constructor? 
+
     private ArrayList<Batsman> lineUp;
     private Result             result;
     private String             commentary = "";
@@ -26,8 +27,7 @@ public class Innings {
     /**
      * Constructs a new first innings.
      * @param t Team name
-     * @param o Total overs
-     * @param rtw Runs to win if team is batting second
+     * @param o Totalovers
      */
     public Innings(String t, int o) {
         teamName = t;
@@ -148,7 +148,13 @@ public class Innings {
         return teamName;
     }
 
-    public Result getResult() {
+    /**
+     * Provides the innings result.
+     * @throws IllegalStateException if innings is not complete
+     */
+    public Result getResult() throws IllegalStateException {
+        if (result == null)
+            throw new IllegalStateException("Please play and complete the innings first.");
         return result;
     }
 
@@ -160,15 +166,28 @@ public class Innings {
         return commentary;
     }
 
-    public int getRunsLeft() {
-        return runsToWin;
+    /**
+     * Results runs left.
+     * @throws UnsupportedOperationException if its first innings.
+     */
+    public int getRunsLeft() throws UnsupportedOperationException {
+        if (isBattingSecond)
+            return runsToWin;
+        else
+            throw new UnsupportedOperationException("Cannot ask for runs left in first innings.");
     }
 
     public int getBallsLeft() {
         return totalOvers * 6 - balls;
     }
 
-    public int getWicketsLeft() {
+    /**
+     * Provides wickets left
+     * @throws IllegalStateException if atleast 1 batsman is not added.
+     */
+    public int getWicketsLeft() throws IllegalStateException {
+        if (lineUp.size() < 1)
+            throw new IllegalStateException("Please add batsman first.");
         return lineUp.size() - wickets - 1;
     }
 
