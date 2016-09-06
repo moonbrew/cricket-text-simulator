@@ -53,12 +53,18 @@ public class Innings {
         isBattingSecond = true;
     }
 
+    //move below only for test
+    public int play() throws IllegalStateException {
+        return play(-1);
+    }
+
+    //change method header and revert changes
     /**
      * Play the innings.
      * @return Runs scored.
      * @throws IllegalStateException Innings is not in correct state to be played.
      */
-    public int play() throws IllegalStateException {
+    public int play(double r) throws IllegalStateException {
         if (lineUp.size() < 2)
             throw new IllegalStateException("Please add more Batsmen");
 
@@ -79,7 +85,12 @@ public class Innings {
         wickets = 0;
         while (balls <= totalOvers * 6) {
             String currentOver = (balls - 1) / 6 + "." + ((balls - 1) % 6 + 1);
-            String ballResult = striker.playBall();
+
+            String ballResult;
+            if (r == -1)
+                ballResult = striker.playBall();
+            else
+                ballResult = striker.testPlayBall(r);
 
             if (ballResult.equals("out")) {
                 commentary += String.format("%s %s gets out!", currentOver, striker.getName());
@@ -214,8 +225,8 @@ public class Innings {
     /**
      * Adds a batsman. They will bat in the order they are added with this method.
      * @param name Name of batsman
-     * @param prob Probabilities in an integer array in the same order as Batsman.BALL_RESULT. Order is not checked.
-     * @throws IllegalArgumentException When probability array is not valid.
+     * @param prob Probabilities in an integer array in the same order as Batsman.BALL_RESULT.
+     * @throws IllegalArgumentException When the probability array is invalid. Does not check if order is right.
      */
     public void addBatsman(String name, int[] prob) throws IllegalArgumentException {
         lineUp.add(new Batsman(name, prob));

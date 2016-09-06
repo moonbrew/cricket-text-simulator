@@ -17,7 +17,7 @@ public class Batsman {
     /**
      * Construct a batsman given a name and probabilities.
      * @param n Name of batsman
-     * @param p Probabilities as percentages for each result in Batsman.BALL_RESULT in the same order in an integer array. Order is not checked.
+     * @param p Probabilities as percentages for each result in Batsman.BALL_RESULT in the same order in an integer array.
      * @throws IllegalArgumentException When the probability array is invalid. Does not check if order is right.
      */
     public Batsman(String n, int[] p) throws IllegalArgumentException {
@@ -47,11 +47,11 @@ public class Batsman {
      */
     public String playBall() {
         double r = Math.random();
-        playBall(r);//body separated for testing
-        return currentBallResult;
+        return testPlayBall(r);//body separated for testing
     }
 
-    private void playBall(double r) {
+    //remove
+    public String testPlayBall(double r) {
         //System.out.println(r);//
         int count = 0;
         double sum = 0;
@@ -64,11 +64,7 @@ public class Batsman {
         currentBallResult = BALL_RESULT[count];
         addRuns();
         ballsPlayed++;
-    }
-
-    //remove
-    public void testPlayBall(double r) {
-        playBall(r);
+        return currentBallResult;
     }
 
     //Helper method showing short way of getting runs that can have a different implementation
