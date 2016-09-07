@@ -55,7 +55,7 @@ public class Innings {
 
     //move below only for test
     public int play() throws IllegalStateException {
-        return play(-1);
+        return testPlay(null);
     }
 
     //change method header and revert changes
@@ -64,7 +64,7 @@ public class Innings {
      * @return Runs scored.
      * @throws IllegalStateException Innings is not in correct state to be played.
      */
-    public int play(double r) throws IllegalStateException {
+    public int testPlay(int [] r) throws IllegalStateException {
         if (lineUp.size() < 2)
             throw new IllegalStateException("Please add more Batsmen");
 
@@ -83,14 +83,15 @@ public class Innings {
         balls = 1;
         runs = 0;
         wickets = 0;
+        int testCount = 0; //remove test
         while (balls <= totalOvers * 6) {
             String currentOver = (balls - 1) / 6 + "." + ((balls - 1) % 6 + 1);
 
             String ballResult;
-            if (r == -1)
+            if (r == null)
                 ballResult = striker.playBall();
             else
-                ballResult = striker.testPlayBall(r);
+                ballResult = striker.testPlayBall((double)r[testCount] / 100);//remove test
 
             if (ballResult.equals("out")) {
                 commentary += String.format("%s %s gets out!", currentOver, striker.getName());
@@ -145,6 +146,7 @@ public class Innings {
             }
             commentary += "\n";
             balls++;
+            testCount++; //remove
         }
 
         if (balls > totalOvers * 6) {
