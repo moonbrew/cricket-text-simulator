@@ -54,10 +54,10 @@ public class Batsman {
     public String testPlayBall(double r) {
         //System.out.println(r);//
         int count = 0;
-        double sum = 0;
+        int sum = 0;
         while (count < BALL_RESULT.length) {
-            sum += (double)probabilities[count] / 100;//coz int
-            if (r < sum)
+            sum += probabilities[count];//coz int
+            if (r * 100 < sum)//right side precise. Left side not precise when testing using double
                 break;
             count++;
         }

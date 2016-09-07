@@ -90,8 +90,11 @@ public class Innings {
             String ballResult;
             if (r == null)
                 ballResult = striker.playBall();
-            else
-                ballResult = striker.testPlayBall((double)r[testCount] / 100);//remove test
+            else{
+                double y = (double)r[testCount] / 100;
+                //System.out.println(y); Cast seems to work as intended. Why?
+                ballResult = striker.testPlayBall(y);//remove test
+            }
 
             if (ballResult.equals("out")) {
                 commentary += String.format("%s %s gets out!", currentOver, striker.getName());
