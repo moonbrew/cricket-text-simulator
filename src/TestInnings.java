@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -105,17 +109,29 @@ public class TestInnings {
      * After play state tests
      */
     @Test
-    public void testAfterPlayState(){
+    public void testAfterPlayState() {
         Innings a = new Innings("Lengaburu", 4, 40);
         a.addBatsman("Kirat Boli", new int[]{5, 30, 25, 10, 15, 1, 9, 5});
         a.addBatsman("N.S Nodhi", new int[]{10, 40, 20, 5, 10, 1, 4, 10});
         a.addBatsman("R Rumrah", new int[]{20, 30, 15, 5, 5, 1, 4, 20});
         a.addBatsman("Shashi Henra", new int[]{30, 25, 5, 0, 5, 1, 4, 30});
-        
-        int [] r = {8, 60, 55, 54, 16, 24,
-        83, 46, 15, 91, 9, 64,
-        70, 68, 75, 8, 16, 71,
-        28, 90, 2, 46, 76};
+
+        int[] r = {8, 60, 55, 54, 16, 24, 83, 46, 15, 91, 9, 64, 70, 68, 75, 8, 16, 71, 28, 90, 2, 46, 76};
         a.testPlay(r);
+        String commentary = "";
+        try {
+            Scanner s = new Scanner(new File("src/Commentary1.txt"));
+            try {
+                while (s.hasNext()) {
+                    commentary += s.nextLine() + "\n";
+                }
+            } finally {
+                s.close();
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+        }
+        assertThat("Commentary1", a.getCommentary(), is(commentary));
+       // assertThat ("Scoreboard1", a.getScoreboard (), is (scoreboard));
     }
 }

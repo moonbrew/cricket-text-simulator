@@ -56,8 +56,8 @@ public class Batsman {
         int count = 0;
         int sum = 0;
         while (count < BALL_RESULT.length) {
-            sum += probabilities[count];//coz int
-            if (r * 100 < sum)//right side precise. Left side not precise when testing using double
+            sum += probabilities[count];
+            if (r * 100 < sum)//double seems to fuck up only during addition
                 break;
             count++;
         }

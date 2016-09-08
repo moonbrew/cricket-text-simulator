@@ -92,7 +92,7 @@ public class Innings {
                 ballResult = striker.playBall();
             else{
                 double y = (double)r[testCount] / 100;
-                //System.out.println(y); Cast seems to work as intended. Why?
+                //System.out.println(y); Cast seems to work as intended. Why? Recheck this!
                 ballResult = striker.testPlayBall(y);//remove test
             }
 
@@ -106,12 +106,12 @@ public class Innings {
                 }
                 striker = l.next();
             } else if (ballResult.equals("dot ball"))
-                commentary += String.format("%s %s scored 0 runs", currentOver, striker.getName());
+                commentary += String.format("%s %s scored 0 runs.", currentOver, striker.getName());
             else {
                 int score = Integer.parseInt(ballResult);
                 runs += score;
                 String y = score == 1 ? "run" : "runs";
-                commentary += String.format("%s %s scored %d %s", currentOver, striker.getName(), score, y);
+                commentary += String.format("%s %s scored %d %s.", currentOver, striker.getName(), score, y);
 
                 //switch
                 if (score == 1 || score == 3 || score == 5) {
