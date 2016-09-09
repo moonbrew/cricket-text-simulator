@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import org.junit.Rule;
@@ -39,7 +40,7 @@ public class TestInnings {
     public void testInitialStateResult1() {
         Innings a = new Innings("Testteam", 6);
 
-        //is null! play innings exception unsupported operation exception.
+        //is null! play innings IllegalStateException exception.
         //no null coz its bad style to send nulls to indicate something
         //be more clear
         thrown.expect(IllegalStateException.class);
@@ -106,10 +107,10 @@ public class TestInnings {
     }
 
     /*
-     * After play state tests
+     * After play state tests: Normal.
      */
     @Test
-    public void testAfterPlayState() {
+    public void testAfterPlayState1() {
         Innings a = new Innings("Lengaburu", 4, 40);
         a.addBatsman("Kirat Boli", new int[]{5, 30, 25, 10, 15, 1, 9, 5});
         a.addBatsman("N.S Nodhi", new int[]{10, 40, 20, 5, 10, 1, 4, 10});
@@ -132,6 +133,112 @@ public class TestInnings {
             System.out.println("File not found.");
         }
         assertThat("Commentary1", a.getCommentary(), is(commentary));
-       // assertThat ("Scoreboard1", a.getScoreboard (), is (scoreboard));
+        String[] name = {"Kirat Boli", "N.S Nodhi", "R Rumrah", "Shashi Henra"};
+        int[] runs = {22, 7, 11, 1};
+        int[] balls = {10, 5, 6, 2};
+        Iterator<Batsman> l = a.getBatsmanIterator();
+        int i = 0;
+        while (l.hasNext()) {//scoreboard
+            Batsman b = l.next();
+            assertThat("Scoreboard name 1", b.getName(), is(name[i]));
+            assertThat("Scoreboard runs scored 1", b.getRunsScored(), is(runs[i]));
+            assertThat("Scoreboard balls played 1", b.getBallsPlayed(), is(balls[i]));
+            i++;
+        }
+        //result
+        assertThat("Result 1", a.getResult(), is(Innings.Result.RUNSCHASED));
+        assertThat("Result runs left 1", a.getRunsLeft(), is(0));
+        assertThat("Result balls left 1", a.getBallsLeft(), is(1));
+        assertThat("Result wickets left 1", a.getWicketsLeft(), is(1));
     }
+
+    @Test
+    public void testAfterPlayState2() {
+        Innings a = new Innings("Lengaburu", 4, 40);
+        a.addBatsman("Kirat Boli", new int[]{5, 30, 25, 10, 15, 1, 9, 5});
+        a.addBatsman("N.S Nodhi", new int[]{10, 40, 20, 5, 10, 1, 4, 10});
+        a.addBatsman("R Rumrah", new int[]{20, 30, 15, 5, 5, 1, 4, 20});
+        a.addBatsman("Shashi Henra", new int[]{30, 25, 5, 0, 5, 1, 4, 30});
+
+        int[] r = {37, 70, 37, 38, 45, 67, 96, 32, 94, 23, 55, 44, 1, 80};
+        a.testPlay(r);
+        String commentary = "";
+        try {
+            Scanner s = new Scanner(new File("src/Commentary2.txt"));
+            try {
+                while (s.hasNext()) {
+                    commentary += s.nextLine() + "\n";
+                }
+            } finally {
+                s.close();
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+        }
+        assertThat("Commentary2", a.getCommentary(), is(commentary));
+        String[] name = {"Kirat Boli", "N.S Nodhi", "R Rumrah", "Shashi Henra"};
+        int[] runs = {15, 0, 1, 3};
+        int[] balls = {7, 1, 1, 5};
+        Iterator<Batsman> l = a.getBatsmanIterator();
+        int i = 0;
+        while (l.hasNext()) {//scoreboard
+            Batsman b = l.next();
+            assertThat("Scoreboard name 2", b.getName(), is(name[i]));
+            assertThat("Scoreboard runs scored 2", b.getRunsScored(), is(runs[i]));
+            assertThat("Scoreboard balls played 2", b.getBallsPlayed(), is(balls[i]));
+            i++;
+        }
+        //result
+        assertThat("Result 2", a.getResult(), is(Innings.Result.ALLOUT));
+        assertThat("Result runs left 2", a.getRunsLeft(), is(21));
+        assertThat("Result balls left 2", a.getBallsLeft(), is(10));
+        assertThat("Result wickets left 2", a.getWicketsLeft(), is(0));
+    }
+    
+    @Test
+    public void testAfterPlayState3() {
+        Innings a = new Innings("Lengaburu", 4, 40);
+        a.addBatsman("Kirat Boli", new int[]{5, 30, 25, 10, 15, 1, 9, 5});
+        a.addBatsman("N.S Nodhi", new int[]{10, 40, 20, 5, 10, 1, 4, 10});
+        a.addBatsman("R Rumrah", new int[]{20, 30, 15, 5, 5, 1, 4, 20});
+        a.addBatsman("Shashi Henra", new int[]{30, 25, 5, 0, 5, 1, 4, 30});
+
+        int[] r = {53, 9, 20, 85, 24, 97, 15, 14, 43, 33, 55, 70, 10, 30, 27, 57, 91, 3, 59, 82, 37, 29, 13, 57};
+        a.testPlay(r);
+        String commentary = "";
+        try {
+            Scanner s = new Scanner(new File("src/Commentary3.txt"));
+            try {
+                while (s.hasNext()) {
+                    commentary += s.nextLine() + "\n";
+                }
+            } finally {
+                s.close();
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+        }
+        assertThat("Commentary3", a.getCommentary(), is(commentary));
+        String[] name = {"Kirat Boli", "N.S Nodhi", "R Rumrah", "Shashi Henra"};
+        int[] runs = {8, 13, 10, 2};
+        int[] balls = {4, 9, 7, 4};
+        Iterator<Batsman> l = a.getBatsmanIterator();
+        int i = 0;
+        while (l.hasNext()) {//scoreboard
+            Batsman b = l.next();
+            assertThat("Scoreboard name 3", b.getName(), is(name[i]));
+            assertThat("Scoreboard runs scored 3", b.getRunsScored(), is(runs[i]));
+            assertThat("Scoreboard balls played 3", b.getBallsPlayed(), is(balls[i]));
+            i++;
+        }
+        //result
+        assertThat("Result 3", a.getResult(), is(Innings.Result.BALLSOVER));
+        assertThat("Result runs left 3", a.getRunsLeft(), is(7));
+        assertThat("Result balls left 3", a.getBallsLeft(), is(0));
+        assertThat("Result wickets left 3", a.getWicketsLeft(), is(1));
+    }
+    
+    /*
+     * Subsequent play tests and zero and negative constructor parameters tests. Test edge states later. 0 run. Neg runs/balls Allow add batsman?
+     */
 }

@@ -33,7 +33,7 @@ public class Innings {
         teamName = t;
         totalOvers = o;
 
-        runsToWin = 0;
+        runsToWin = 0;//value ignored
         lineUp = new ArrayList<Batsman>();
         isBattingSecond = false;
     }
@@ -64,7 +64,7 @@ public class Innings {
      * @return Runs scored.
      * @throws IllegalStateException Innings is not in correct state to be played.
      */
-    public int testPlay(int [] r) throws IllegalStateException {
+    public int testPlay(int[] r) throws IllegalStateException {
         if (lineUp.size() < 2)
             throw new IllegalStateException("Please add more Batsmen");
 
@@ -90,7 +90,7 @@ public class Innings {
             String ballResult;
             if (r == null)
                 ballResult = striker.playBall();
-            else{
+            else {
                 double y = (double)r[testCount] / 100;
                 //System.out.println(y); Cast seems to work as intended. Why? Recheck this!
                 ballResult = striker.testPlayBall(y);//remove test
@@ -194,8 +194,10 @@ public class Innings {
      * @throws UnsupportedOperationException if its first innings.
      */
     public int getRunsLeft() throws UnsupportedOperationException {
-        if (isBattingSecond)
-            return runsToWin;
+        if (isBattingSecond && result != Result.RUNSCHASED)
+            return runsToWin - runs;
+        else if (result == Result.RUNSCHASED)
+            return 0;
         else
             throw new UnsupportedOperationException("Cannot ask for runs left in first innings.");
     }
