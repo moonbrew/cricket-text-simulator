@@ -85,6 +85,14 @@ public class TestInnings {
         assertThat("Add batsman state wickets2", a.getWicketsLeft(), is(3));
     }
 
+    @Test
+    public void testAddBatsman() {
+        Innings a = new Innings("Testteam", 6);
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Probability array should be of length 8");
+        a.addBatsman("Testguy1", new int[]{5, 30, 25, 10, 15, 1, 9});
+    }
+
     /*
      * play initial state checks
      */
@@ -239,7 +247,7 @@ public class TestInnings {
     }
 
     /*
-     * Subsequent play tests and zero and negative constructor parameters tests. Test edge states later. 0 run. Neg runs/balls Allow add batsman?
+     * Subsequent play tests and zero and negative constructor parameters tests. Neg runs/balls, Allow add batsman? No.
      */
     @Test
     //last ball runs achieved or out. The breaks keep balls accurate.
