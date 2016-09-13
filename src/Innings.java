@@ -3,22 +3,31 @@ import java.util.Iterator;
 
 /**
  * Class representing a single Innings. 
+ * Each innings has a lineup of batsmen.
+ * A different lineup represets a different innings.
+ * An innings can play multiple times.
  */
 public class Innings {
 
     private final String       teamName;
     private final boolean      isBattingSecond;
     private final int          totalOvers;
-    private final int          runsToWin;      //new: so final means you have to initialize in constructor? 
+    private final int          runsToWin;               //new: so final means you have to initialize in constructor? 
 
     private ArrayList<Batsman> lineUp;
     private Result             result;
-    private String             commentary = "";
+    private String             commentary       = "";
     private int                runs;
     private int                balls;
     private int                wickets;
+    private boolean            isInningsStarted = false;
 
+    /**
+     * Result of an Innings.
+     */
     public enum Result {
+
+
         ALLOUT,
         BALLSOVER,
         RUNSCHASED
@@ -27,9 +36,12 @@ public class Innings {
     /**
      * Constructs a new innings for a team that bats first.
      * @param t Team name
-     * @param o Totalovers
+     * @param o Total overs
+     * @throws IllegalArgumentException when total overs is zero or negative.
      */
-    public Innings(String t, int o) {
+    public Innings(String t, int o) throws IllegalArgumentException {
+        if (o < 1)
+            throw new IllegalArgumentException("Total overs has to be greater than zero.");
         teamName = t;
         totalOvers = o;
 
@@ -43,8 +55,11 @@ public class Innings {
      * @param t Team name
      * @param o Total overs left
      * @param rtw Runs to win
+     * @throws IllegalArgummntException when either overs or runs to win are zero or negative.
      */
-    public Innings(String t, int o, int rtw) {
+    public Innings(String t, int o, int rtw) throws IllegalArgumentException {
+        if (o < 1 || rtw < 1)
+            throw new IllegalArgumentException("Total overs and runs to win have to be greater than zero.");
         teamName = t;
         totalOvers = o;
         runsToWin = rtw;
@@ -67,6 +82,8 @@ public class Innings {
     public int testPlay(int[] r) throws IllegalStateException {
         if (lineUp.size() < 2)
             throw new IllegalStateException("Please add more Batsmen");
+
+        isInningsStarted = true;
 
         Iterator<Batsman> l = lineUp.iterator();
 
@@ -101,7 +118,7 @@ public class Innings {
                 wickets++;
                 if (!l.hasNext()) {//is this correct?
                     result = Result.ALLOUT;
-                    commentary += String.format(" Team %s gets all out!\n", teamName);
+                    commentary += String.format(" %s gets all out!\n", teamName);
                     break;
                 }
                 striker = l.next();
@@ -152,7 +169,7 @@ public class Innings {
             testCount++; //remove
         }
 
-        if (balls > totalOvers * 6) {
+        if (balls > totalOvers * 6) {//only when other breaks don't occur and loop ended normally.
             result = Result.BALLSOVER;//for reruns. better no default
             balls--;
         }
@@ -196,7 +213,7 @@ public class Innings {
     public int getRunsLeft() throws UnsupportedOperationException {
         if (isBattingSecond && result != Result.RUNSCHASED)
             return runsToWin - runs;
-        else if (result == Result.RUNSCHASED)
+        else if (result == Result.RUNSCHASED)//implied that its second innings.
             return 0;
         else
             throw new UnsupportedOperationException("Cannot ask for runs left in first innings.");
@@ -234,8 +251,12 @@ public class Innings {
      * @param name Name of batsman
      * @param prob Probabilities in an integer array in the same order as Batsman.BALL_RESULT.
      * @throws IllegalArgumentException When the probability array is invalid. Does not check if order is right.
+     * @throws UnsupportedOperationException whena batsman is added during or after one innings is played.
      */
-    public void addBatsman(String name, int[] prob) throws IllegalArgumentException {
+    public void addBatsman(String name, int[] prob) throws IllegalArgumentException, UnsupportedOperationException {
+        if (isInningsStarted) //untested during and after innings.
+            throw new UnsupportedOperationException(
+                                                    "Cannot add more batsman once Innings is started. Make new innings to change batting line up.");
         lineUp.add(new Batsman(name, prob));
     }
 }

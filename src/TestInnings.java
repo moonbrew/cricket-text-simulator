@@ -194,7 +194,7 @@ public class TestInnings {
         assertThat("Result balls left 2", a.getBallsLeft(), is(10));
         assertThat("Result wickets left 2", a.getWicketsLeft(), is(0));
     }
-    
+
     @Test
     public void testAfterPlayState3() {
         Innings a = new Innings("Lengaburu", 4, 40);
@@ -237,8 +237,61 @@ public class TestInnings {
         assertThat("Result balls left 3", a.getBallsLeft(), is(0));
         assertThat("Result wickets left 3", a.getWicketsLeft(), is(1));
     }
-    
+
     /*
      * Subsequent play tests and zero and negative constructor parameters tests. Test edge states later. 0 run. Neg runs/balls Allow add batsman?
      */
+    @Test
+    //last ball runs achieved or out. The breaks keep balls accurate.
+    public void testAfterPlayStateSpecial1() {
+        Innings a = new Innings("Lengaburu", 4, 40);
+        a.addBatsman("Kirat Boli", new int[]{5, 30, 25, 10, 15, 1, 9, 5});
+        a.addBatsman("N.S Nodhi", new int[]{10, 40, 20, 5, 10, 1, 4, 10});
+        a.addBatsman("R Rumrah", new int[]{20, 30, 15, 5, 5, 1, 4, 20});
+        a.addBatsman("Shashi Henra", new int[]{30, 25, 5, 0, 5, 1, 4, 30});
+
+        int[] r = {8, 60, 55, 54, 16, 24, 83, 46, 15, 91, 9, 64, 70, 68, 75, 8, 16, 71, 28, 90, 2, 46, 4, 76};
+        a.testPlay(r);
+        assertThat("Result Special 1", a.getResult(), is(Innings.Result.RUNSCHASED));
+        assertThat("Result runs left Special 1", a.getRunsLeft(), is(0));
+        assertThat("Result balls left Special 1", a.getBallsLeft(), is(0));
+        assertThat("Result wickets left Special 1", a.getWicketsLeft(), is(1));
+
+        int[] s = {8, 60, 55, 54, 16, 24, 83, 46, 15, 91, 9, 64, 70, 68, 75, 8, 16, 71, 28, 90, 2, 46, 4, 99};
+        a.testPlay(s);
+        assertThat("Result Special 1", a.getResult(), is(Innings.Result.ALLOUT));
+        assertThat("Result runs left Special 1", a.getRunsLeft(), is(3));
+        assertThat("Result balls left Special 1", a.getBallsLeft(), is(0));
+        assertThat("Result wickets left Special 1", a.getWicketsLeft(), is(0));
+    }
+
+    @Test
+    public void testAfterPlayStateSpecial2() {
+        Innings a = new Innings("Lengaburu", 4, 40);
+        a.addBatsman("Kirat Boli", new int[]{5, 30, 25, 10, 15, 1, 9, 5});
+        a.addBatsman("N.S Nodhi", new int[]{10, 40, 20, 5, 10, 1, 4, 10});
+        a.addBatsman("R Rumrah", new int[]{20, 30, 15, 5, 5, 1, 4, 20});
+        a.addBatsman("Shashi Henra", new int[]{30, 25, 5, 0, 5, 1, 4, 30});
+
+        int[] r = {8, 60, 55, 54, 16, 24, 83, 46, 15, 91, 9, 64, 70, 68, 75, 8, 16, 71, 28, 90, 2, 46, 4, 76};
+        a.testPlay(r);
+
+        thrown.expect(UnsupportedOperationException.class);
+        thrown.expectMessage("Cannot add more batsman once Innings is started. Make new innings to change batting line up.");
+        a.addBatsman("Rumali", new int[]{1, 2, 3});
+    }
+
+    @Test
+    public void testConstructor1() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Total overs and runs to win have to be greater than zero");
+        Innings a = new Innings(null, 0, 40);
+    }
+
+    @Test
+    public void testConstructor2() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Total overs has to be greater than zero");
+        Innings a = new Innings(null, -1);
+    }
 }
