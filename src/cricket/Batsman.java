@@ -1,9 +1,10 @@
+package cricket;
+
 /**
  * Class representing a single batsman.
  * Knows name, probabilities, runs scored and balls played.
  * Plays a ball based on probability.
  */
-
 public class Batsman {
 
     private final String         name;
