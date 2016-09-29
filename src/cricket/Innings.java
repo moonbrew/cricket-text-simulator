@@ -28,15 +28,24 @@ public class Innings {
      * Result of an Innings.
      */
     public enum Result {
-
-
+        /**
+         *  All batsmen got out.
+         */
         ALLOUT,
+
+        /**
+         *  Balls got over.
+         */
         BALLSOVER,
+
+        /**
+         *  Target runs have been achived. Only possible if target runs are provided.
+         */
         RUNSCHASED
     }
 
     /**
-     * Constructs a new innings for a team that bats first.
+     * Constructs a new innings for a team that bats first. Innings will attempt to last the full overs.
      * @param t Team name
      * @param o Total overs
      * @throws IllegalArgumentException when total overs is zero or negative.
@@ -53,7 +62,7 @@ public class Innings {
     }
 
     /**
-     * Constructs a innings for a team that bats second.
+     * Constructs a innings for a team that bats second. Innings will attempt to last till target runs is met.
      * @param t Team name
      * @param o Total overs left
      * @param rtw Runs to win
@@ -70,18 +79,12 @@ public class Innings {
         isBattingSecond = true;
     }
 
-    //move below only for test
-    public int play() throws IllegalStateException {
-        return testPlay(null);
-    }
-
-    //change method header and revert changes
     /**
      * Play the innings.
      * @return Runs scored.
      * @throws IllegalStateException Innings is not in correct state to be played.
      */
-    public int testPlay(int[] r) throws IllegalStateException {
+    public int play() throws IllegalStateException {
         if (lineUp.size() < 2)
             throw new IllegalStateException("Please add more Batsmen");
 
@@ -102,18 +105,11 @@ public class Innings {
         balls = 1;
         runs = 0;
         wickets = 0;
-        int testCount = 0; //remove test
         while (balls <= totalOvers * 6) {
             String currentOver = (balls - 1) / 6 + "." + ((balls - 1) % 6 + 1);
 
             String ballResult;
-            if (r == null)
-                ballResult = striker.playBall();
-            else {
-                double y = (double)r[testCount] / 100;
-                //System.out.println(y); Cast seems to work as intended. Why? Recheck this!
-                ballResult = striker.testPlayBall(y);//remove test
-            }
+            ballResult = striker.playBall();
 
             if (ballResult.equals("out")) {
                 commentary += String.format("%s %s gets out!", currentOver, striker.getName());
@@ -168,7 +164,6 @@ public class Innings {
             }
             commentary += "\n";
             balls++;
-            testCount++; //remove
         }
 
         if (balls > totalOvers * 6) {//only when other breaks don't occur and loop ended normally.
@@ -192,7 +187,7 @@ public class Innings {
 
     /**
      * Provides the innings result.
-     * @throws IllegalStateException if innings is not complete.
+     * @throws IllegalStateException if atleast one innings run is not complete.
      */
     public Result getResult() throws IllegalStateException {
         if (result == null)
@@ -210,6 +205,7 @@ public class Innings {
 
     /**
      * Provides runs left.
+     * @return Runs left.
      * @throws UnsupportedOperationException if its first innings.
      */
     public int getRunsLeft() throws UnsupportedOperationException {
@@ -222,6 +218,13 @@ public class Innings {
     }
 
     /**
+     * @return Runs scored in the innings.
+     */
+    public int getRuns() {
+        return runs;
+    }
+
+    /**
      * Provides the number of balls left.
      */
     public int getBallsLeft() {
@@ -230,6 +233,7 @@ public class Innings {
 
     /**
      * Provides wickets left.
+     * @return Wickets left.
      * @throws IllegalStateException if atleast 1 batsman is not added.
      */
     public int getWicketsLeft() throws IllegalStateException {
@@ -253,7 +257,7 @@ public class Innings {
      * @param name Name of batsman
      * @param prob Probabilities in an integer array in the same order as Batsman.BALL_RESULT.
      * @throws IllegalArgumentException When the probability array is invalid. Does not check if order is right.
-     * @throws UnsupportedOperationException whena batsman is added during or after one innings is played.
+     * @throws UnsupportedOperationException whena batsman is added during or after one innings is played. Object becomes immutable.
      */
     public void addBatsman(String name, int[] prob) throws IllegalArgumentException, UnsupportedOperationException {
         if (isInningsStarted) //untested during and after innings.

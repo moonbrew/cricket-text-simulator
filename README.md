@@ -4,6 +4,7 @@
 
 1.  Client application gets control over output except per ball commentary.
 2.  Client will enter probabilities in the order of results: dot ball, 1, 2, 3, 4, 5, 6, out.
+3.  Probabilities for batsman will add up to 100. (H Mamla in the 3rd problem fails this condition. I have changed his "out" probability value.)
 
 ## Structure of program
 

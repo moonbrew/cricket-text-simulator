@@ -48,12 +48,6 @@ public class Batsman {
      */
     public String playBall() {
         double r = Math.random();
-        return testPlayBall(r);//body separated for testing
-    }
-
-    //remove
-    public String testPlayBall(double r) {
-        //System.out.println(r);//
         int count = 0;
         int sum = 0;
         while (count < BALL_RESULT.length) {
