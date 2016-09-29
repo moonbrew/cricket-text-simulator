@@ -12,4 +12,4 @@ Batsman class is a model of a batsman. Innings class represents a single innings
 
 ## How to run
 
-Just run  java personal/src/Problem2 and java personal/src/Problem3 from the commandline for problems 2 and 3 of the cricket set respectively.
+Just run  java bin/Problem2 and java bin/Problem3 from the commandline for problems 2 and 3 of the cricket set respectively. No input is required.
