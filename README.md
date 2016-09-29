@@ -10,3 +10,5 @@
 Batsman class is a model of a batsman. Innings class represents a single innings from a match. Innings is immutable once you call play. The order of batsmen cannot be changed and more batsmen cannot be added.
 
 ## How to run
+
+Just run  java personal/src/Problem2 and java personal/src/Problem3 from the commandline for problems 2 and 3 of the cricket set respectively.
