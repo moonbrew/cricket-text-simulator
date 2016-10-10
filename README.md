@@ -1,15 +1,17 @@
-# Cricket match program
+#Readme
 
-## Assumptions
+##Innings States
+- `SETUP`: Default state once object is created. You can call `addbatsman()` only here. Once this state is exited, you cannot return to it.
+- `READY` : State after calling `ready()`. You can run the simulation now.
+- `TESTING` : State after calling `test (int [] testArray)`. Similar to `ready()` but skips the randomness. 
+- `ALLOUT` : State if team gets all out.
+- `BALLSOVER` : State if team finish the overs. (without achieving target if second innings)
+- `TARGETACHIEVED` : State if team makes the target. (if second innings).
 
-1.  Client application gets control over output except per ball commentary.
-2.  Client will enter probabilities in the order of results: dot ball, 1, 2, 3, 4, 5, 6, out.
-3.  Probabilities for batsman will add up to 100. (H Mamla in the 3rd problem fails this condition. I have changed his "out" probability value.)
+##Running the program
+Run *java bin/Problem2* and *java bin/Problem3* for solutions to problems 2 and 3 respectively of the cricket set.
 
-## Structure of program
+To run tests, run *java bin/TestBatsman*, *java bin/TestInningsControllerAndBroadcaster* and *java bin/TestInnings*. Make sure junit and matcher jars are added to the java classpath.
 
-Batsman class is a model of a batsman. Innings class represents a single innings from a match. Innings is immutable once you call play. The order of batsmen cannot be changed and more batsmen cannot be added. Main acts as controller and handles output.
-
-## How to run
-
-Just run  java bin/Problem2 and java bin/Problem3 from the commandline for problems 2 and 3 of the cricket set respectively. No input is required.
+##Other information
+TestInnings class tests the program output vs expected correct outputs while the other test classes test each class.
