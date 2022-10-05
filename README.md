@@ -1,4 +1,4 @@
-#Readme
+I am going to maybe this project with what I have learnt over the years and from what people said people who have reviewed this during interviews.
 
 ##Innings States
 - `SETUP`: Default state once object is created. You can call `addbatsman()` only here. Once this state is exited, you cannot return to it.
